@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: ${DEMO_POSTGRESQL_URL:jdbc:postgresql://localhost:5432/demo}
+    username: ${DEMO_POSTGRESQL_USERNAME:root}
+    password: ${DEMO_POSTGRESQL_PASSWORD:root}
+
+logging:
+  level:
+    root: debug
