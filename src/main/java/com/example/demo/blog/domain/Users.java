@@ -1,4 +1,4 @@
-package com.example.demo.domain;
+package com.example.demo.blog.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -13,5 +13,6 @@ public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // SERIAL 필드 자동 생성
     private Long id;
+    private String email;
     private String password;
 }

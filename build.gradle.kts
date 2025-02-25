@@ -34,6 +34,7 @@ dependencies {
 	// database
 	runtimeOnly("org.postgresql:postgresql:42.7.4")
 	testRuntimeOnly("com.h2database:h2")
+	implementation("com.h2database:h2")
 
 	// flyway
 	implementation("org.flywaydb:flyway-core")

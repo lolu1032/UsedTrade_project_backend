@@ -1,9 +1,16 @@
+server:
+  port: 9000
 spring:
   datasource:
-    url: ${DEMO_POSTGRESQL_URL:jdbc:postgresql://localhost:5432/demo}
-    username: ${DEMO_POSTGRESQL_USERNAME:root}
-    password: ${DEMO_POSTGRESQL_PASSWORD:root}
-
-logging:
-  level:
-    root: debug
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username:
+    password:
+    initialization-mode: always
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  flyway:
+    enabled: false
