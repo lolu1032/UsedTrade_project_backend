@@ -10,10 +10,5 @@ public class HelloController {
     public ResponseEntity<String> hello() {
         return ResponseEntity.ok("Hello from Spring Boot local!");
     }
-
-    @PostMapping("/login")
-    public void login() {
-
-    }
 }
 
