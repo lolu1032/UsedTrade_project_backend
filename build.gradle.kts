@@ -31,6 +31,13 @@ dependencies {
 	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
 
+	// jwt
+	implementation ("io.jsonwebtoken:jjwt-api:0.12.3")
+	implementation ("io.jsonwebtoken:jjwt-impl:0.12.3")
+	implementation ("io.jsonwebtoken:jjwt-jackson:0.12.3")
+
+//	implementation ("org.springframework.boot:spring-boot-starter-security")
+
 	// database
 	runtimeOnly("org.postgresql:postgresql:42.7.4")
 	testRuntimeOnly("com.h2database:h2")

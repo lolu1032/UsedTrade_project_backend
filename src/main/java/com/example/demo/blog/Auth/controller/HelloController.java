@@ -1,4 +1,4 @@
-package com.example.demo.blog.controller;
+package com.example.demo.blog.Auth.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

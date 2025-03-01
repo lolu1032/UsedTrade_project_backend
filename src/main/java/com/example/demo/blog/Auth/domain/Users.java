@@ -1,4 +1,4 @@
-package com.example.demo.blog.domain;
+package com.example.demo.blog.Auth.domain;
 
 import jakarta.persistence.*;
 import lombok.*;

@@ -1,6 +1,6 @@
-package com.example.demo.blog.dto;
+package com.example.demo.blog.Auth.dto;
 
-import com.example.demo.blog.domain.Users;
+import com.example.demo.blog.Auth.domain.Users;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.Builder;
@@ -20,4 +20,9 @@ public final class LoginCommandDtos {
             String message,
             Users users
     ){}
+    @Builder
+    public record TokenResponse(
+            String accessToken,
+            String refreshToken
+    ) {}
 }

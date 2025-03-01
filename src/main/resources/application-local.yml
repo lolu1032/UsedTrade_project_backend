@@ -14,3 +14,7 @@ spring:
     show-sql: true
   flyway:
     enabled: false
+jwt:
+  secret: https://jwt.io/#debugger-io?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c# 실제 사용할 시, 강력한 비밀 키 사용
+  access-token-expiration: 3600000
+  refresh-token-expiration: 1209600000
