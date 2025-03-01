@@ -5,6 +5,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 
 import io.jsonwebtoken.Jwts;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +15,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 @Component
+@Slf4j
 public class JwtUtil {
 
     private final SecretKey secretKey;
@@ -31,7 +33,7 @@ public class JwtUtil {
 
     public String createAccessToken(Users user) {
         return Jwts.builder()
-                .claim("username", user.getEmail())
+                .claim("email", user.getEmail())
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + accessExpiration))
                 .signWith(secretKey)
@@ -40,7 +42,7 @@ public class JwtUtil {
 
     public String createRefreshToken(Users user) {
         return Jwts.builder()
-                .claim("username", user.getEmail())
+                .claim("email", user.getEmail())
                 .expiration(new Date(System.currentTimeMillis() + refreshExpiration))
                 .signWith(secretKey)
                 .compact();
@@ -48,7 +50,7 @@ public class JwtUtil {
 
     public boolean isValidRefreshToken(String refreshToken) {
         try {
-            getClaimsToken(refreshToken);
+            getClaimsToken(refreshToken); // 클레임을 추출할 수 없으면 예외 발생
             return true;
         } catch (NullPointerException | JwtException e) {
             return false;

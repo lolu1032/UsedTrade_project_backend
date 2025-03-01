@@ -9,10 +9,12 @@ import com.example.demo.blog.Auth.repository.UserRepository;
 import com.example.demo.blog.Auth.util.JwtUtil;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserService {
     private final UserRepository userRepository;
     private final RefreshTokenRepository refreshTokenRepository;
@@ -23,7 +25,7 @@ public class UserService {
      * @param users
      * @return
      */
-    public TokenResponse  login(Users users) {
+    public accessTokenResponse  login(Users users) {
         Users user = userRepository.findByEmail(users.getEmail())
             .orElseThrow(
                     LoginErrorCode.EMAIL_NOT_FOUND::exception
@@ -31,7 +33,7 @@ public class UserService {
         if(!userRepository.existsByPassword(user.getPassword())) {
             throw LoginErrorCode.PASSWORD_NOT_FOUND.exception();
         }
-        RefreshToken refreshTokenEntity  = refreshTokenRepository.findById(user.getId())
+        RefreshToken refreshTokenEntity  = refreshTokenRepository.findByUserId(user.getId())
                 .orElseThrow(LoginErrorCode.TOKEN_NOT_FOUND::exception);
         String accessToken = "";
         String refreshToken = refreshTokenEntity.getToken();
@@ -40,11 +42,11 @@ public class UserService {
         } else {
             refreshToken = jwtUtil.createRefreshToken(user);
             refreshTokenEntity.updateToken(refreshToken);
+            refreshTokenRepository.save(refreshTokenEntity);
         }
-        return TokenResponse.builder()
+        return accessTokenResponse.builder()
                 .accessToken(accessToken)
                 .build();
-
     }
 
     /**
@@ -52,7 +54,7 @@ public class UserService {
      * @param loginSelectRequest
      * @return
      */
-    public TokenResponse sign(LoginSelectRequest loginSelectRequest) {
+    public TokensResponse sign(LoginSelectRequest loginSelectRequest) {
         Users user = Users.builder()
                 .email(loginSelectRequest.email())
                 .password(loginSelectRequest.password())
@@ -70,7 +72,7 @@ public class UserService {
                         .token(refreshToken)
                         .build()
         );
-        return TokenResponse.builder()
+        return TokensResponse.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .build();

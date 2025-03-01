@@ -21,8 +21,12 @@ public final class LoginCommandDtos {
             Users users
     ){}
     @Builder
-    public record TokenResponse(
+    public record TokensResponse(
             String accessToken,
             String refreshToken
+    ) {}
+    @Builder
+    public record accessTokenResponse(
+            String accessToken
     ) {}
 }
