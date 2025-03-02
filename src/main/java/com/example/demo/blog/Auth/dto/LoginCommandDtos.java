@@ -1,6 +1,5 @@
 package com.example.demo.blog.Auth.dto;
 
-import com.example.demo.blog.Auth.domain.Users;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.Builder;
@@ -13,20 +12,22 @@ public final class LoginCommandDtos {
             String email,
             @NotBlank(message = "비밀번호를 입력하십시오.")
             @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$", message = "비밀번호는 최소 8자 이상이어야 하며, 문자와 숫자가 포함되어야 합니다.")
-            String password
+            String password,
+            @NotBlank(message = "이름을 입력하시오.")
+            String username
     ){}
     @Builder
     public record LoginSelectResponse(
-            String message,
-            Users users
+            String email,
+            String password
     ){}
     @Builder
     public record TokensResponse(
             String accessToken,
             String refreshToken
-    ) {}
+    ){}
     @Builder
     public record accessTokenResponse(
             String accessToken
-    ) {}
+    ){}
 }

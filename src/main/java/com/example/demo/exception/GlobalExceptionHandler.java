@@ -7,13 +7,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    // ResponseEntity -> 제네릭에 와일드카드
-    // ResponseEntity<ApiError>
-    @ExceptionHandler(CustomException.class) // 컨트룰러에서까지 캐치하지 않으면 여기로
+    @ExceptionHandler(CustomException.class)
     public ResponseEntity<ApiError> handleCustomException(CustomException exception, HttpServletRequest request) {
-        // 응답을 교체할 수 있음
         var errorCode = exception.getErrorCode();
-        var path = request.getRequestURI(); // ex) "/boards"
+        var path = request.getRequestURI();
 
         ApiError error = ApiError.builder()
                 .title(errorCode.message())
@@ -21,7 +18,6 @@ public class GlobalExceptionHandler {
 //                .detail()
                 .instance(path)
                 .build();
-        // 동적으로 응답의 HTTP 상태 코드를 바꿀 수 잇다.
 //        return new ResponseEntity<>(error, errorCode.status());
         return ResponseEntity
                 .status(errorCode.status())

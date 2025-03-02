@@ -1,5 +1,6 @@
 package com.example.demo.blog.Auth.domain;
 
+import com.example.demo.blog.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -9,10 +10,11 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @ToString
-public class Users {
+public class Users extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // SERIAL 필드 자동 생성
     private Long id;
     private String email;
     private String password;
+    private String username;
 }

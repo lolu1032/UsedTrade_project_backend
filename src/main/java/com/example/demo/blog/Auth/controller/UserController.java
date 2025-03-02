@@ -1,6 +1,5 @@
 package com.example.demo.blog.Auth.controller;
 
-import com.example.demo.blog.Auth.domain.Users;
 import com.example.demo.blog.Auth.dto.LoginCommandDtos.*;
 import com.example.demo.blog.Auth.service.UserService;
 import jakarta.validation.Valid;
@@ -16,8 +15,8 @@ public class UserController {
     private final UserService service;
 
     @PostMapping("/login")
-    public accessTokenResponse login(@RequestBody Users users) {
-        return service.login(users);
+    public accessTokenResponse login(@RequestBody @Valid LoginSelectResponse loginSelectResponse) {
+        return service.login(loginSelectResponse);
     }
 
     @PostMapping("/signup")

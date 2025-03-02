@@ -7,7 +7,7 @@ import lombok.Builder;
 @Builder
 public record ApiError(
         String type,
-        @JsonInclude(Include.NON_NULL) // 기본 메시지 컨버터인 JackSon에서 반환 시 null이면 JSON에 포함하지 않게 함.
+        @JsonInclude(Include.NON_NULL)
         String title,
         @JsonInclude(Include.NON_NULL)
         Integer status,

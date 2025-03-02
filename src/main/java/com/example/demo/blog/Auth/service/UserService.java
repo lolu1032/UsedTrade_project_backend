@@ -7,9 +7,9 @@ import com.example.demo.blog.Auth.exception.LoginErrorCode;
 import com.example.demo.blog.Auth.repository.RefreshTokenRepository;
 import com.example.demo.blog.Auth.repository.UserRepository;
 import com.example.demo.blog.Auth.util.JwtUtil;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,18 +19,19 @@ public class UserService {
     private final UserRepository userRepository;
     private final RefreshTokenRepository refreshTokenRepository;
     private final JwtUtil jwtUtil;
+    BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
     /**
      * 이메일이 없을 시 EMAIL_NOT_FOUND 예외 처리
      * 또는 이메일은 존재하지만 비밀번호가 틀릴 시 PASSWORD_NOT_FOUND 예외 처리
-     * @param users
+     * @param loginSelectResponse
      * @return
      */
-    public accessTokenResponse  login(Users users) {
-        Users user = userRepository.findByEmail(users.getEmail())
+    public accessTokenResponse  login(LoginSelectResponse loginSelectResponse) {
+        Users user = userRepository.findByEmail(loginSelectResponse.email())
             .orElseThrow(
                     LoginErrorCode.EMAIL_NOT_FOUND::exception
             );
-        if(!userRepository.existsByPassword(user.getPassword())) {
+        if(!bCryptPasswordEncoder.matches(loginSelectResponse.password(), user.getPassword())) {
             throw LoginErrorCode.PASSWORD_NOT_FOUND.exception();
         }
         RefreshToken refreshTokenEntity  = refreshTokenRepository.findByUserId(user.getId())
@@ -57,7 +58,8 @@ public class UserService {
     public TokensResponse sign(LoginSelectRequest loginSelectRequest) {
         Users user = Users.builder()
                 .email(loginSelectRequest.email())
-                .password(loginSelectRequest.password())
+                .password(bCryptPasswordEncoder.encode(loginSelectRequest.password()))
+                .username(loginSelectRequest.username())
                 .build();
 
         if (userRepository.existsByEmail(user.getEmail())) {
