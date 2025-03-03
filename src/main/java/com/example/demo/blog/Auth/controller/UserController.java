@@ -23,4 +23,12 @@ public class UserController {
     public TokensResponse sign(@RequestBody @Valid LoginSelectRequest loginSelectRequest) {
         return service.sign(loginSelectRequest);
     }
+    @PostMapping("/find/id")
+    public void findId() {
+
+    }
+    @PostMapping("/reset/password")
+    public void findpassword() {
+
+    }
 }
