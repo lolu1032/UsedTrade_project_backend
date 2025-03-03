@@ -18,6 +18,9 @@ bin/
 !**/src/test/**/bin/
 
 ### IntelliJ IDEA ###
+application-local.yml
+application.yml
+
 .idea
 *.iws
 *.iml
@@ -35,6 +38,3 @@ out/
 
 ### VS Code ###
 .vscode/
-
-/application-local.yml
-/application.yml
