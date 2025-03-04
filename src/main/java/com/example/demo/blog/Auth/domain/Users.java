@@ -17,4 +17,8 @@ public class Users extends BaseEntity {
     private String email;
     private String password;
     private String username;
+
+    public void updatePassword(String newPassword) {
+        this.password = newPassword;
+    }
 }
