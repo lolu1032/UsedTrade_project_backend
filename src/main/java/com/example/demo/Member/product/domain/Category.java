@@ -1,9 +1,13 @@
 package com.example.demo.Member.product.domain;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
-@Table(name = "Category")
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
+@Getter
 public class Category {
 
     @Id
@@ -11,6 +15,5 @@ public class Category {
     @Column(name = "id")
     private Long id; // 카테고리 ID
 
-    @Column(name = "category_name", nullable = false)
     private String categoryName; // 카테고리 이름 (예: 전자기기, 의류, 가구 등)
 }
