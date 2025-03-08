@@ -40,6 +40,11 @@
 │   │   ├── V1_0_0_create_tb_users.sql
 │   │   ├── V1_0_1_init_enable_uuid.sql
 │   │   ├── V1_0_2_create_tb_refreshToken.sql
+|   |   ├── V1_0_3_create_tb_verificationToken.sql
+|   |   ├── V1_0_4_create_tb_location.sql
+|   |   ├── V1_0_5_create_tb_category.sql
+|   |   ├── V1_0_6_create_tb_product.sql
+|   |   ├── V1_0_7_create_tb_image.sql
 ```
 ## 코드
 <div style="display: flex; justify-content: center; gap: 10px;">
