@@ -2,6 +2,7 @@ package com.example.demo.App.product.dto;
 
 import com.example.demo.App.Auth.domain.Users;
 import com.example.demo.App.product.domain.Location;
+import com.example.demo.App.product.domain.Product;
 import lombok.Builder;
 
 import java.math.BigDecimal;
@@ -16,6 +17,5 @@ public final class BoardReadDtos {
             String username,
             String regionName,
             String imageUrl
-    ) {
-    }
+    ) {}
 }
