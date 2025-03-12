@@ -50,4 +50,11 @@ public class Product extends BaseEntity {
     public String getFirstImageUrl() {
         return images.isEmpty() ? null : images.get(0).getImageUrl();
     }
+
+    public void update(String title, String description, BigDecimal price) {
+        this.title = title;
+        this.description = description;
+        this.price = price;
+    }
+
 }
