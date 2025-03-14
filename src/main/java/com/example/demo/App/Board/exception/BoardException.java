@@ -1,4 +1,4 @@
-package com.example.demo.App.product.exception;
+package com.example.demo.App.Board.exception;
 
 import com.example.demo.exception.CustomException;
 import com.example.demo.exception.ErrorCode;

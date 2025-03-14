@@ -1,6 +1,6 @@
-package com.example.demo.App.product.repository;
+package com.example.demo.App.Board.repository;
 
-import com.example.demo.App.product.domain.Category;
+import com.example.demo.App.Board.domain.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CategoryRepository extends JpaRepository<Category,Long> {

@@ -1,4 +1,4 @@
-package com.example.demo.App.product.domain;
+package com.example.demo.App.Board.domain;
 
 import com.example.demo.App.Auth.domain.Users;
 import com.example.demo.App.common.BaseEntity;
@@ -19,29 +19,35 @@ public class Product extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id; // 상품 ID
+    private Long id;
 
-    private String title; // 상품 제목
+    private String title;
 
-    private String description; // 상품 설명
+    private String description;
 
-    private BigDecimal price; // 판매 가액
+    private BigDecimal price;
 
-    private int views; // 조회수
+    private int views;
 
-    private String status; // 상품 상태 (ex: NEW, USED)
+    /**
+     * TODO
+     * status용 enum을 추가로 만들 것
+     * 판매중, 예약, 판매완료
+     * SALE,RESERVED,SOLD
+     */
+    private String status; // 상품 상태
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private Users user; // 판매자 ID (User 테이블 참조)
+    private Users user;
 
     @ManyToOne
     @JoinColumn(name = "location_id")
-    private Location location; // 판매 지역 ID (Location 테이블 참조)
+    private Location location;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    private Category category; // 카테고리 ID (Category 테이블 참조)
+    private Category category;
 
 
     @OneToMany(mappedBy = "product")
@@ -55,6 +61,10 @@ public class Product extends BaseEntity {
         this.title = title;
         this.description = description;
         this.price = price;
+    }
+
+    public int updateViews(int views) {
+        return this.views++;
     }
 
 }
