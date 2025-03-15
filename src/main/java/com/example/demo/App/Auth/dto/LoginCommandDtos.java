@@ -28,6 +28,7 @@ public final class LoginCommandDtos {
     ){}
     @Builder
     public record accessTokenResponse(
-            String accessToken
+            String accessToken,
+            String username
     ){}
 }

@@ -62,9 +62,7 @@ public class Product extends BaseEntity {
         this.description = description;
         this.price = price;
     }
-
-    public int updateViews(int views) {
+    public int updateViews() {
         return this.views++;
     }
-
 }

@@ -29,6 +29,7 @@ public class BoardController {
         Page<Board> dtoPage = products.map(product -> new Board(
                 product.getId(),
                 product.getTitle(),
+                product.getDescription(),
                 product.getPrice(),
                 product.getViews(),
                 product.getLocation().getRegionName(),
@@ -44,27 +45,12 @@ public class BoardController {
      */
     @GetMapping("/products/{id}")
     public Board readOne(@PathVariable long id) {
-        Product product = boardRepository.findById(id)
-                .orElseThrow(BoardErrorCode.BOARD_NOT_FOUND::exception);
-
-        product.updateViews(product.getViews());
-
-        boardRepository.save(product);
-
-        return Board.builder()
-                .id(product.getId())
-                .title(product.getTitle())
-                .price(product.getPrice())
-                .views(product.getViews())
-                .username(product.getUser().getUsername())
-                .regionName(product.getLocation().getRegionName())
-                .imageUrl(product.getImages().isEmpty() ? null : product.getImages().get(0).getImageUrl())  // 첫 번째 이미지 URL
-                .build();
+        return boardService.readOne(id);
     }
 
     @PostMapping
     public CreateBoard createBoard(@RequestBody @Valid CreateBoard createBoard) {
-        return boardService.createBoard(createBoard.title(),createBoard.description(),createBoard.price(),createBoard.user_id(),createBoard.location_id(),createBoard.category_id());
+        return boardService.createBoard(createBoard.title(),createBoard.description(),createBoard.price(),createBoard.userId(),createBoard.locationId(),createBoard.categoryId());
     }
 
 

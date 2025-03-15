@@ -12,6 +12,7 @@ public final class BoardReadDtos {
     public record Board(
             Long id,
             String title,
+            String description,
             BigDecimal price,
             int views,
             String username,
@@ -45,9 +46,9 @@ public final class BoardReadDtos {
 
             @NotNull(message = "가격을 입력하세요.")
             BigDecimal price,
-            Long user_id,
-            Long location_id,
-            Long category_id
+            Long userId,
+            Long locationId,
+            Long categoryId
     ) {
     }
 }

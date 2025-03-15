@@ -10,6 +10,7 @@ import com.example.demo.App.Board.exception.BoardErrorCode;
 import com.example.demo.App.Board.repository.BoardRepository;
 import com.example.demo.App.Board.repository.CategoryRepository;
 import com.example.demo.App.Board.repository.LocationRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -55,9 +56,9 @@ public class BoardService {
                 .title(product.getTitle())
                 .description(product.getDescription())
                 .price(product.getPrice())
-                .user_id(userId)
-                .location_id(locationId)
-                .category_id(categoryId)
+                .userId(userId)
+                .locationId(locationId)
+                .categoryId(categoryId)
                 .build();
     }
 
@@ -83,5 +84,26 @@ public class BoardService {
                 .orElseThrow(BoardErrorCode.BOARD_NOT_FOUND::exception);
 
         boardRepository.deleteById(product.getId());
+    }
+
+    public Board readOne(long id) {
+        Product product = boardRepository.findById(id)
+                .orElseThrow(BoardErrorCode.BOARD_NOT_FOUND::exception);
+
+        product.updateViews();
+
+        boardRepository.save(product);
+
+
+        return Board.builder()
+                .id(product.getId())
+                .title(product.getTitle())
+                .description(product.getDescription())
+                .price(product.getPrice())
+                .views(product.getViews())
+                .username(product.getUser().getUsername())
+                .regionName(product.getLocation().getRegionName())
+                .imageUrl(product.getImages().isEmpty() ? null : product.getImages().get(0).getImageUrl())
+                .build();
     }
 }

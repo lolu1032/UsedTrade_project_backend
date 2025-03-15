@@ -55,6 +55,7 @@ public class UserService {
             refreshTokenRepository.save(refreshTokenEntity);
         }
         return accessTokenResponse.builder()
+                .username(user.getUsername())
                 .accessToken(accessToken)
                 .build();
     }
