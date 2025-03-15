@@ -27,14 +27,14 @@ public class BoardService {
 
     public CreateBoard createBoard(
             String title, String description,
-            BigDecimal price, Long user_id,
-            Long location_id, Long category_id
+            BigDecimal price, Long userId,
+            Long locationId, Long categoryId
     ) {
-        Users user = userRepository.findById(user_id)
+        Users user = userRepository.findById(userId)
                 .orElseThrow(BoardErrorCode.USER_NOT_FOUND::exception);
-        Location location = locationRepository.findById(location_id)
+        Location location = locationRepository.findById(locationId)
                 .orElseThrow(BoardErrorCode.LOCATION_NOT_FOUND::exception);
-        Category category = categoryRepository.findById(category_id)
+        Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(BoardErrorCode.CATEGORY_NOT_FOUND::exception);
 
         Product product = Product.builder()
@@ -55,9 +55,9 @@ public class BoardService {
                 .title(product.getTitle())
                 .description(product.getDescription())
                 .price(product.getPrice())
-                .user_id(user_id)
-                .location_id(location_id)
-                .category_id(category_id)
+                .user_id(userId)
+                .location_id(locationId)
+                .category_id(categoryId)
                 .build();
     }
 
