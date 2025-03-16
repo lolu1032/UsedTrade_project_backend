@@ -10,7 +10,6 @@ import com.example.demo.App.Board.exception.BoardErrorCode;
 import com.example.demo.App.Board.repository.BoardRepository;
 import com.example.demo.App.Board.repository.CategoryRepository;
 import com.example.demo.App.Board.repository.LocationRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
