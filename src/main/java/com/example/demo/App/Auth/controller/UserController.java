@@ -15,12 +15,12 @@ public class UserController {
     private final UserService service;
 
     @PostMapping("/login")
-    public accessTokenResponse login(@RequestBody @Valid LoginSelectResponse loginSelectResponse) {
-        return service.login(loginSelectResponse);
+    public AccessTokenResponse login(@RequestBody @Valid LoginRequest loginRequest) {
+        return service.login(loginRequest);
     }
 
     @PostMapping("/signup")
-    public TokensResponse sign(@RequestBody @Valid LoginSelectRequest loginSelectRequest) {
-        return service.sign(loginSelectRequest);
+    public TokensResponse sign(@RequestBody @Valid PasswordRequest passwordRequest) {
+        return service.sign(passwordRequest);
     }
 }

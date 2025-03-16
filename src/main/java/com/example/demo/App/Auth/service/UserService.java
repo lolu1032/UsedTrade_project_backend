@@ -32,15 +32,15 @@ public class UserService {
     /**
      * 이메일이 없을 시 EMAIL_NOT_FOUND 예외 처리
      * 또는 이메일은 존재하지만 비밀번호가 틀릴 시 PASSWORD_NOT_FOUND 예외 처리
-     * @param loginSelectResponse
+     * @param loginRequest
      * @return
      */
-    public accessTokenResponse  login(LoginSelectResponse loginSelectResponse) {
-        Users user = userRepository.findByEmail(loginSelectResponse.email())
+    public AccessTokenResponse login(LoginRequest loginRequest) {
+        Users user = userRepository.findByEmail(loginRequest.email())
             .orElseThrow(
                     LoginErrorCode.EMAIL_NOT_FOUND::exception
             );
-        if(user.matchPassword(bCryptPasswordEncoder,loginSelectResponse.password())) {
+        if(user.matchPassword(bCryptPasswordEncoder, loginRequest.password())) {
             throw LoginErrorCode.PASSWORD_NOT_FOUND.exception();
         }
         RefreshToken refreshTokenEntity  = refreshTokenRepository.findByUserId(user.fetchUserId())
@@ -54,7 +54,7 @@ public class UserService {
             refreshTokenEntity.updateToken(refreshToken);
             refreshTokenRepository.save(refreshTokenEntity);
         }
-        return accessTokenResponse.builder()
+        return AccessTokenResponse.builder()
                 .username(user.getUsername())
                 .accessToken(accessToken)
                 .build();
@@ -62,14 +62,14 @@ public class UserService {
 
     /**
      * Builder한 정보가 만약 있으면 USERNAME_ALREADY_EXISTS로 예외처리 없으면 저장
-     * @param loginSelectRequest
+     * @param passwordRequest
      * @return
      */
-    public TokensResponse sign(LoginSelectRequest loginSelectRequest) {
+    public TokensResponse sign(PasswordRequest passwordRequest) {
         Users user = Users.builder()
-                .email(loginSelectRequest.email())
-                .password(bCryptPasswordEncoder.encode(loginSelectRequest.password()))
-                .username(loginSelectRequest.username())
+                .email(passwordRequest.email())
+                .password(bCryptPasswordEncoder.encode(passwordRequest.password()))
+                .username(passwordRequest.username())
                 .build();
 
         if (userRepository.existsByEmail(user.fetchUserEmail())) {

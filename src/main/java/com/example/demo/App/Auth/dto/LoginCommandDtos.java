@@ -6,7 +6,7 @@ import lombok.Builder;
 
 public final class LoginCommandDtos {
     @Builder
-    public record LoginSelectRequest(
+    public record PasswordRequest(
             @NotBlank(message = "이메일을 입력하십시오.")
             @Pattern(regexp = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$", message = "올바른 이메일 형식이 아닙니다.")
             String email,
@@ -17,7 +17,7 @@ public final class LoginCommandDtos {
             String username
     ){}
     @Builder
-    public record LoginSelectResponse(
+    public record LoginRequest(
             String email,
             String password
     ){}
@@ -27,7 +27,7 @@ public final class LoginCommandDtos {
             String refreshToken
     ){}
     @Builder
-    public record accessTokenResponse(
+    public record AccessTokenResponse(
             String accessToken,
             String username
     ){}
