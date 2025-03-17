@@ -59,7 +59,9 @@ dependencies {
 	annotationProcessor("org.projectlombok:lombok-mapstruct-binding:0.2.0")
 	// test
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	testImplementation("org.junit.platform:junit-platform-launcher")
 	testImplementation("io.mockk:mockk:1.13.12")
+	testImplementation("org.mockito:mockito-inline:5.2.0")
 }
 
 tasks.withType<Test> {

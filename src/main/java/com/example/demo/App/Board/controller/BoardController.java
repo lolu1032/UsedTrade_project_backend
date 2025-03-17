@@ -39,10 +39,6 @@ public class BoardController {
         return ResponseEntity.ok(dtoPage);
     }
 
-    /**
-     * TODO
-     * service단에 옮기기, Validation 만들기, 프론트 쪽 조회수 실시간으로 안늘어가고있다
-     */
     @GetMapping("/products/{id}")
     public Board readOne(@PathVariable long id) {
         return boardService.readOne(id);
