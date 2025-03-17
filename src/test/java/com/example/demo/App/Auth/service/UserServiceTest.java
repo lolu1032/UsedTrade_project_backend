@@ -13,7 +13,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
@@ -60,5 +59,28 @@ class UserServiceTest {
                     .isInstanceOf(LoginException.class)
                     .hasMessageContaining("PASSWORD_NOT_FOUND");
         }
+    }
+
+    @DisplayName("로그인")
+    @Test
+    void login() {
+        // given
+        PasswordRequest passwordRequest = new PasswordRequest("qwer1234@naver.com", "qwer1234", "p");
+
+        String password = bCryptPasswordEncoder.encode(passwordRequest.password());
+
+        Users users = Users.builder()
+                .username(passwordRequest.username())
+                .email(passwordRequest.email())
+                .password(password)
+                .build();
+
+        LoginRequest loginRequest = new LoginRequest("qwer1234@naver.com","qwer1234");
+
+        // when
+
+        // then
+        assertThat(users.getEmail()).isEqualTo(loginRequest.email());
+        assertThat(bCryptPasswordEncoder.matches(loginRequest.password(),users.getPassword())).isTrue();
     }
 }

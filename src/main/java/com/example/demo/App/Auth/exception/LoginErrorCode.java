@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 @RequiredArgsConstructor
 public enum LoginErrorCode implements ErrorCode {
     DEFAULT("로그인 오류",HttpStatus.INTERNAL_SERVER_ERROR),
+    ID_NOT_FOUNT("계정이 존재하지 않습니다.", HttpStatus.NOT_FOUND),
     EMAIL_NOT_FOUND("이메일이 존재하지 않습니다.", HttpStatus.NOT_FOUND),
     PASSWORD_NOT_FOUND("비밀번호가 틀렸습니다.", HttpStatus.NOT_FOUND),
     USERNAME_ALREADY_EXISTS("이미 사용 중인 계정입니다.",HttpStatus.CONFLICT),
