@@ -3,7 +3,7 @@ package com.example.demo.App.Board.service;
 import com.example.demo.App.Auth.domain.Users;
 import com.example.demo.App.Auth.repository.UserRepository;
 import com.example.demo.App.Board.domain.Category;
-import com.example.demo.App.Board.domain.Like;
+import com.example.demo.App.Board.domain.Likes;
 import com.example.demo.App.Board.domain.Location;
 import com.example.demo.App.Board.domain.Product;
 import com.example.demo.App.Board.repository.BoardRepository;
@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
 import java.math.BigDecimal;
 import java.util.Optional;
 
@@ -29,7 +30,7 @@ class BoardApiServiceTest {
 
     @DisplayName("좋아요 테스트코드")
     @Test
-    void like() {
+    void likes() {
         // given
         Location location = Location.builder()
                 .id(1L)
@@ -71,10 +72,10 @@ class BoardApiServiceTest {
         Users userss = userRepository.findById(users.getId())
                 .orElseThrow();
 
-        Like like = new Like(false, userss, products);
+        Likes like = new Likes(false, userss, products);
 
         // when
-        Like updatedLike = Like.builder()
+        Likes updatedLike = Likes.builder()
                 .status(true)
                 .users(like.getUsers())
                 .product(like.getProduct())

@@ -9,7 +9,7 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 @Getter
-public class Like {
+public class Likes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,6 +24,7 @@ public class Like {
     @JoinColumn(name = "product_id")
     private Product product;
 
-    public Like(boolean b, Users users, Product product) {
+
+    public Likes(boolean b, Users userss, Product products) {
     }
 }

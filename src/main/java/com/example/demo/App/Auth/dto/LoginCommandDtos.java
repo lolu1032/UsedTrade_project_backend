@@ -28,6 +28,7 @@ public final class LoginCommandDtos {
     ){}
     @Builder
     public record AccessTokenResponse(
+            Long id,
             String accessToken,
             String username
     ){}

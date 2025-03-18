@@ -51,4 +51,16 @@ public final class BoardReadDtos {
             Long categoryId
     ) {
     }
+
+    @Builder
+    public record LikeRequest(
+            Long userId,
+            Long productId
+    ) {
+    }
+    @Builder
+    public record LikeResponse(
+            boolean status
+    ) {
+    }
 }
