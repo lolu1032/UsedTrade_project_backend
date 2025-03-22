@@ -55,20 +55,27 @@ public class ChatController {
     public void sendMessage(@Payload ChatMessage chatMessage) {
         log.info("메시지 전송 요청: {}", chatMessage);
 
-        // 메시지 타입에 따른 처리
-        switch (chatMessage.getType()) {
-            case ENTER:
-                chatMessage.setMessage(chatMessage.getSender() + "님이 입장하셨습니다.");
-                break;
-            case EXIT:
-                chatMessage.setMessage(chatMessage.getSender() + "님이 퇴장하셨습니다.");
-                break;
-            default:
-                break;
+        ChatMessage finalMessage = chatMessage;
+
+        // 메시지 타입에 따른 메시지 생성
+        if (chatMessage.getType() == ChatMessage.MessageType.ENTER) {
+            finalMessage = ChatMessage.builder()
+                    .type(ChatMessage.MessageType.ENTER)
+                    .roomId(chatMessage.getRoomId())
+                    .sender(chatMessage.getSender())
+                    .message(chatMessage.getSender() + "님이 입장하셨습니다.")
+                    .build();
+        } else if (chatMessage.getType() == ChatMessage.MessageType.EXIT) {
+            finalMessage = ChatMessage.builder()
+                    .type(ChatMessage.MessageType.EXIT)
+                    .roomId(chatMessage.getRoomId())
+                    .sender(chatMessage.getSender())
+                    .message(chatMessage.getSender() + "님이 퇴장하셨습니다.")
+                    .build();
         }
 
         // Redis pub/sub을 통해 메시지 발행
-        chatService.sendMessage(chatMessage);
+        chatService.sendMessage(finalMessage);
     }
 
     // 사용자 입장 처리
@@ -80,7 +87,14 @@ public class ChatController {
         headerAccessor.getSessionAttributes().put("username", message.getSender());
         headerAccessor.getSessionAttributes().put("roomId", message.getRoomId());
 
-        message.setType(ChatMessage.MessageType.ENTER);
-        chatService.sendMessage(message);
+        ChatMessage enterMessage = ChatMessage.builder()
+                .type(ChatMessage.MessageType.ENTER)
+                .roomId(message.getRoomId())
+                .sender(message.getSender())
+                .message(message.getSender() + "님이 입장하셨습니다.")
+                .build();
+
+        chatService.sendMessage(enterMessage);
     }
+
 }

@@ -57,8 +57,16 @@ public class ChatService {
         if (message.getType() == ChatMessage.MessageType.TALK) {
             ChatRoom room = chatRooms.get(message.getRoomId());
             if (room != null) {
-                room.setLastMessage(message.getMessage());
+                // 기존 room에서 새로운 ChatRoom 객체로 교체 (불변 설계)
+                ChatRoom updatedRoom = ChatRoom.builder()
+                        .roomId(room.getRoomId())
+                        .name(room.getName())
+                        .lastMessage(message.getMessage())
+                        .build();
+
+                chatRooms.put(message.getRoomId(), updatedRoom);
             }
         }
     }
+
 }

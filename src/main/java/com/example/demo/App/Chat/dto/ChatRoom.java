@@ -1,20 +1,28 @@
 package com.example.demo.App.Chat.dto;
 
-
-import lombok.Data;
+import lombok.Getter;
 
 import java.util.UUID;
 
-@Data
+import lombok.Builder;
+
+@Getter
 public class ChatRoom {
     private String roomId;
     private String name;
-    private String lastMessage; // This field exists in your React code
+    private String lastMessage; // React 연동 고려 필드
+
+    @Builder
+    public ChatRoom(String roomId, String name, String lastMessage) {
+        this.roomId = roomId;
+        this.name = name;
+        this.lastMessage = lastMessage;
+    }
 
     public static ChatRoom create(String name) {
-        ChatRoom chatRoom = new ChatRoom();
-        chatRoom.roomId = UUID.randomUUID().toString();
-        chatRoom.name = name; // This was missing in your code
-        return chatRoom;
+        return ChatRoom.builder()
+                .roomId(UUID.randomUUID().toString())
+                .name(name)
+                .build();
     }
 }
