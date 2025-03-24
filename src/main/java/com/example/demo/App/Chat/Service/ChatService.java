@@ -1,5 +1,7 @@
 package com.example.demo.App.Chat.Service;
 
+import com.example.demo.App.Chat.Repository.ChatRoomRepository;
+import com.example.demo.App.Chat.domain.ChatRoomEntity;
 import com.example.demo.App.Chat.dto.ChatMessage;
 import com.example.demo.App.Chat.dto.ChatRoom;
 import lombok.RequiredArgsConstructor;
@@ -20,22 +22,31 @@ public class ChatService {
 
     private final SimpMessageSendingOperations messagingTemplate;
 
+    private final ChatRoomRepository chatRoomRepository;
+
     // 채팅방 ID와 채팅방 객체를 저장하는 맵
     private Map<String, ChatRoom> chatRooms = new ConcurrentHashMap<>();
 
-    // 채팅방 생성
-    public ChatRoom createRoom(String name) {
-        ChatRoom chatRoom = ChatRoom.create(name);
-        chatRooms.put(chatRoom.getRoomId(), chatRoom);
-        log.info("채팅방 생성 완료: {}", chatRoom);
-        return chatRoom;
-    }
+    /**
+     * TODO
+     * 생성하기전 이미 만들어진 방이 있으면 안만들기.
+     */
+//    public ChatRoom createRoom(String name) {
+//        log.info(name);
+//        ChatRoom chatRoom = ChatRoom.create(name);
+//        chatRooms.put(chatRoom.getRoomId(), chatRoom);
+//        ChatRoomEntity chatRoomEntity = ChatRoomEntity.builder()
+//                .roomId(chatRoom.getRoomId())
+//                .name(chatRoom.getName())
+//                .build();
+//        chatRoomRepository.save(chatRoomEntity);
+//        log.info("채팅방 생성 완료: {}", chatRoom);
+//        return chatRoom;
+//    }
 
     // 모든 채팅방 조회
-    public List<ChatRoom> findAllRooms() {
-        List<ChatRoom> result = new ArrayList<>(chatRooms.values());
-        Collections.reverse(result); // 최신순으로 정렬
-        return result;
+    public List<ChatRoomEntity> findAllRooms() {
+        return chatRoomRepository.findAll();
     }
 
     // 특정 채팅방 조회

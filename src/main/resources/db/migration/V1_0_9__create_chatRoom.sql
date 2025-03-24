@@ -2,5 +2,9 @@ CREATE TABLE IF NOT EXISTS chat_rooms (
     room_id VARCHAR(255) PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    user_id BIGINT NOT NULL,
+    product_id BIGINT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (product_id) REFERENCES product(id)
 );

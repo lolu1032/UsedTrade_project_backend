@@ -29,12 +29,6 @@ public class Product extends BaseEntity {
 
     private int views;
 
-    /**
-     * TODO
-     * status용 enum을 추가로 만들 것
-     * 판매중, 예약, 판매완료
-     * SALE,RESERVED,SOLD
-     */
     private String status; // 상품 상태
 
     @ManyToOne

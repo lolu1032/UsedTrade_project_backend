@@ -1,6 +1,7 @@
 package com.example.demo.App.Chat.Controller;
 
 import com.example.demo.App.Chat.Service.ChatService;
+import com.example.demo.App.Chat.domain.ChatRoomEntity;
 import com.example.demo.App.Chat.dto.ChatMessage;
 import com.example.demo.App.Chat.dto.ChatRoom;
 import lombok.RequiredArgsConstructor;
@@ -23,15 +24,15 @@ public class ChatController {
     private final ChatService chatService;
 
     // 채팅방 생성
-    @PostMapping("/room")
-    public ChatRoom createRoom(@RequestBody ChatRoom chatRoom) {
-        log.info("방 생성 요청: {}", chatRoom.getName());
-        return chatService.createRoom(chatRoom.getName());
-    }
+//    @PostMapping("/room")
+//    public ChatRoom createRoom(@RequestBody ChatRoom chatRoom) {
+//        log.info("방 생성 요청: {}", chatRoom.getName());
+//        return chatService.createRoom(chatRoom.getName());
+//    }
 
     // 채팅방 목록 조회
     @GetMapping("/rooms")
-    public List<ChatRoom> getRoomList() {
+    public List<ChatRoomEntity> getRoomList() {
         log.info("방 목록 조회 요청");
         return chatService.findAllRooms();
     }

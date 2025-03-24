@@ -1,9 +1,9 @@
 package com.example.demo.App.Chat.domain;
 
+import com.example.demo.App.Auth.domain.Users;
+import com.example.demo.App.Board.domain.Product;
 import com.example.demo.App.common.BaseEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.UUID;
@@ -21,10 +21,12 @@ public class ChatRoomEntity extends BaseEntity {
 
     private String name;
 
-    public static ChatRoomEntity create(String name) {
-        return ChatRoomEntity.builder()
-                .roomId(UUID.randomUUID().toString())
-                .name(name)
-                .build();
-    }
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private Users userId;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product productId;
+
 }
