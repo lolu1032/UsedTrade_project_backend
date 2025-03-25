@@ -1,7 +1,12 @@
 package com.example.demo.App.Chat.Service;
 
+import com.example.demo.App.Auth.domain.Users;
+import com.example.demo.App.Auth.repository.UserRepository;
+import com.example.demo.App.Board.domain.Product;
+import com.example.demo.App.Board.repository.BoardRepository;
 import com.example.demo.App.Chat.Repository.ChatRoomRepository;
 import com.example.demo.App.Chat.domain.ChatRoomEntity;
+import com.example.demo.App.Chat.dto.ChatCommandDtos.*;
 import com.example.demo.App.Chat.dto.ChatMessage;
 import com.example.demo.App.Chat.dto.ChatRoom;
 import lombok.RequiredArgsConstructor;
@@ -9,10 +14,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
+
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
@@ -24,25 +29,35 @@ public class ChatService {
 
     private final ChatRoomRepository chatRoomRepository;
 
+    private final BoardRepository boardRepository;
+
+    private final UserRepository userRepository;
+
     // 채팅방 ID와 채팅방 객체를 저장하는 맵
     private Map<String, ChatRoom> chatRooms = new ConcurrentHashMap<>();
 
-    /**
-     * TODO
-     * 생성하기전 이미 만들어진 방이 있으면 안만들기.
-     */
-//    public ChatRoom createRoom(String name) {
-//        log.info(name);
-//        ChatRoom chatRoom = ChatRoom.create(name);
-//        chatRooms.put(chatRoom.getRoomId(), chatRoom);
-//        ChatRoomEntity chatRoomEntity = ChatRoomEntity.builder()
-//                .roomId(chatRoom.getRoomId())
-//                .name(chatRoom.getName())
-//                .build();
-//        chatRoomRepository.save(chatRoomEntity);
-//        log.info("채팅방 생성 완료: {}", chatRoom);
-//        return chatRoom;
-//    }
+    public ChatRoomEntity createRoom(ChatRoomRequest request) {
+        ChatRoomRequest requests = ChatRoomRequest.builder()
+                .userId(request.userId())
+                .productId(request.productId())
+                .name(request.name())
+                .build();
+
+        Users userId = userRepository.findById(requests.userId()).orElseThrow();
+
+        Product productId = boardRepository.findById(requests.productId()).orElseThrow();
+
+        // TODO 이쪽 부근 HTTP Status 설정해서 프론트 단에서 이 상태코드 응답 받으면 방생성말고 방리스트쪽으로 옮기라는 식으로 진행
+        if(chatRoomRepository.existsByUserIdAndProductId(userId,productId)) {
+            throw new IllegalArgumentException("방생성 못해요");
+        }
+
+        ChatRoomEntity chatRoomEntity = ChatRoom.create(requests, userId, productId);
+
+
+        return chatRoomRepository.save(chatRoomEntity);
+
+    }
 
     // 모든 채팅방 조회
     public List<ChatRoomEntity> findAllRooms() {

@@ -1,9 +1,10 @@
 package com.example.demo.App.Chat.dto;
 
+import com.example.demo.App.Auth.domain.Users;
+import com.example.demo.App.Board.domain.Product;
 import com.example.demo.App.Chat.domain.ChatRoomEntity;
 import lombok.Getter;
 
-import java.util.List;
 import java.util.UUID;
 
 import lombok.Builder;
@@ -24,16 +25,12 @@ public class ChatRoom {
     }
 
 
-
-    public static List<ChatRoomEntity> create(List<ChatRoomRequest> requests) {
-        return requests.stream()
-                .map(request -> ChatRoomEntity.builder()
-                        .roomId(UUID.randomUUID().toString())
-                        .name(request.getName())
-                        .productId(request.getProductId())
-                        .userId(request.getUserId())
-                        .build()
-                )
-                .toList();
+    public static ChatRoomEntity create(ChatCommandDtos.ChatRoomRequest requests , Users user, Product product) {
+        return ChatRoomEntity.builder()
+                .roomId(UUID.randomUUID().toString())
+                .name(requests.name())
+                .productId(product)
+                .userId(user)
+                .build();
     }
 }

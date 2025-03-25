@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import com.example.demo.App.Chat.dto.ChatCommandDtos.*;
 
 import java.util.List;
 
@@ -35,7 +36,7 @@ class ChatRoomTest {
 
     @DisplayName("방 생성 테스트")
     @Test
-    void test() {
+    void createRoom() {
         // given
         Users user = userRepository.findById(1L).orElseThrow();
         Product product = boardRepository.findById(1L).orElseThrow();
@@ -44,25 +45,29 @@ class ChatRoomTest {
         Product product2 = boardRepository.findById(2L).orElseThrow();
 
         ChatRoomRequest request = ChatRoomRequest.builder()
-                .userId(user)
-                .productId(product)
+                .userId(user.getId())
+                .productId(product.getId())
                 .name("테스트 채팅방")
                 .build();
 
         ChatRoomRequest request2 = ChatRoomRequest.builder()
-                .userId(user2)
-                .productId(product2)
+                .userId(user2.getId())
+                .productId(product2.getId())
                 .name("테스트 채팅방2")
                 .build();
 
-        List<ChatRoomEntity> chatRoom = ChatRoom.create(List.of(request, request2));
+        ChatRoomEntity chatRoom = ChatRoom.create(request,user,product);
+        ChatRoomEntity chatRoom2 = ChatRoom.create(request2, user2,product2);
 
-        List<ChatRoomEntity> save = chatRoomRepository.saveAll(chatRoom);
+        chatRoomRepository.save(chatRoom);
+        chatRoomRepository.save(chatRoom2);
 
         // when
         var chatRooms = chatRoomRepository.findAll();
 
         // then
         assertThat(chatRooms).hasSize(2);
+        assertThat(chatRooms.get(0).getProductId().getId()).isEqualTo(1L);
+        assertThat(chatRooms.get(0).getName()).isEqualTo("테스트 채팅방");
     }
 }
