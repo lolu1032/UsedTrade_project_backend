@@ -1,28 +1,23 @@
 package com.example.demo.App.Chat.dto;
 
 import com.example.demo.App.Auth.domain.Users;
-import com.example.demo.App.Auth.dto.LoginCommandDtos;
-import com.example.demo.App.Auth.exception.LoginErrorCode;
-import com.example.demo.App.Auth.exception.LoginException;
 import com.example.demo.App.Auth.repository.UserRepository;
 import com.example.demo.App.Board.domain.Product;
 import com.example.demo.App.Board.repository.BoardRepository;
 import com.example.demo.App.Chat.Repository.ChatRoomRepository;
 import com.example.demo.App.Chat.Service.ChatService;
 import com.example.demo.App.Chat.domain.ChatRoomEntity;
-import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
+@ActiveProfiles("test")
 @SpringBootTest
 class ChatRoomTest {
 
