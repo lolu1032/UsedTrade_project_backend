@@ -1,5 +1,6 @@
 package com.example.demo.App.Chat.Controller;
 
+import com.example.demo.App.Chat.Repository.ChatRoomRepository;
 import com.example.demo.App.Chat.Service.ChatService;
 import com.example.demo.App.Chat.domain.ChatRoomEntity;
 import com.example.demo.App.Chat.dto.ChatCommandDtos.*;
@@ -7,6 +8,7 @@ import com.example.demo.App.Chat.dto.ChatMessage;
 import com.example.demo.App.Chat.dto.ChatRoom;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
@@ -23,10 +25,11 @@ public class ChatController {
 
     private final SimpMessageSendingOperations messagingTemplate;
     private final ChatService chatService;
+    private final ChatRoomRepository chatRoomRepository;
 
     // 채팅방 생성
     @PostMapping("/room")
-    public ChatRoomEntity createRoom(@RequestBody ChatRoomRequest request) {
+    public ChatRoomResponse createRoom(@RequestBody ChatRoomRequest request) {
         log.info("방 생성 요청: {}", request.name());
         return chatService.createRoom(request);
     }
@@ -48,8 +51,7 @@ public class ChatController {
     // 채팅방 삭제
     @DeleteMapping("/room/{roomId}")
     public void deleteRoom(@PathVariable String roomId) {
-        log.info("방 삭제 요청: {}", roomId);
-        chatService.deleteRoom(roomId);
+        chatRoomRepository.deleteById(roomId);
     }
 
     // 채팅 메시지 전송

@@ -1,4 +1,4 @@
-package com.example.demo.App.Chat;
+package com.example.demo.App.Chat.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

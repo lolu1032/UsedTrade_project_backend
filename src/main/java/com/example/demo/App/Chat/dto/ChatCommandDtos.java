@@ -2,6 +2,7 @@ package com.example.demo.App.Chat.dto;
 
 import lombok.Builder;
 import lombok.Getter;
+import org.springframework.http.HttpStatus;
 
 @Getter
 public final class ChatCommandDtos {
@@ -12,5 +13,8 @@ public final class ChatCommandDtos {
             Long userId,
             Long productId
     ){}
+
+    @Builder
+    public record ChatRoomResponse(HttpStatus status, String message){}
 }
 

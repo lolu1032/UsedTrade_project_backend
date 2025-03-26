@@ -1,4 +1,4 @@
-package com.example.demo.App.Chat;
+package com.example.demo.App.Chat.config;
 
 
 import com.example.demo.App.Chat.Service.RedisSubscriber;

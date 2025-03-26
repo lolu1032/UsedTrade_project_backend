@@ -31,13 +31,13 @@ public class BoardApiService {
     public LikeResponse likes(LikeRequest likeRequest) {
         Product product = boardRepository.findById(likeRequest.productId())
                 .orElseThrow();
-        System.out.println(product);
+
         Users users = userRepository.findById(likeRequest.userId())
                 .orElseThrow();
 
         Likes like = Likes.builder()
                 .product(product)
-                .status(true)
+                .status(likeRequest.status())
                 .users(users)
                 .build();
 
@@ -48,16 +48,16 @@ public class BoardApiService {
                 .build();
     }
 
-    /**
-     * TODO
-     * like 값이 없을 때의 예외처리 만들어야한다.
-     * 기능은 정상작동됨.
-     */
 
     public LikeResponse likeView(Long userId,Long productId) {
 
         List<LikeResponse> like = likeRepository.findByUsersIdAndProductId(userId,productId);
 
+        if(like.isEmpty()) {
+            return LikeResponse.builder()
+                    .status(false)
+                    .build();
+        }
         return LikeResponse.builder()
                 .status(like.get(0).status())
                 .build();

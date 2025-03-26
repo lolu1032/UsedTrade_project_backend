@@ -55,7 +55,8 @@ public final class BoardReadDtos {
     @Builder
     public record LikeRequest(
             Long userId,
-            Long productId
+            Long productId,
+            boolean status
     ) {
     }
     @Builder

@@ -10,6 +10,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 public interface BoardRepository extends JpaRepository<Product,Long> {
     // 여러번 각각의 엔티티들을 조회 하여 한번에 조회할 수 있게 조치
-    @EntityGraph(attributePaths = {"location", "user", "category", "images"})
+//    @EntityGraph(attributePaths = {"location", "user", "category", "images"})
     Page<Product> findAll(Pageable pageable); // 페이징 처리
 }
