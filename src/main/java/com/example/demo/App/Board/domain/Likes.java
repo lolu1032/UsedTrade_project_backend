@@ -17,12 +17,12 @@ public class Likes {
 
     private Boolean status;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "user_id")
     @JsonIgnore
     private Users users;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "product_id")
     @JsonIgnore
     private Product product;

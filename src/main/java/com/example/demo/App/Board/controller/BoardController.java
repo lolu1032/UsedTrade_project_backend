@@ -2,7 +2,6 @@ package com.example.demo.App.Board.controller;
 
 import com.example.demo.App.Board.domain.Product;
 import com.example.demo.App.Board.dto.BoardReadDtos.*;
-import com.example.demo.App.Board.exception.BoardErrorCode;
 import com.example.demo.App.Board.repository.BoardRepository;
 import com.example.demo.App.Board.service.BoardService;
 import jakarta.validation.Valid;
@@ -24,19 +23,8 @@ public class BoardController {
     private final BoardService boardService;
 
     @GetMapping("/products")
-    public ResponseEntity<Page<Board>> getProducts(@PageableDefault(page = 0, size = 20) Pageable pageable) {
-        Page<Product> products = boardRepository.findAll(pageable);
-        Page<Board> dtoPage = products.map(product -> new Board(
-                product.getId(),
-                product.getTitle(),
-                product.getDescription(),
-                product.getPrice(),
-                product.getViews(),
-                product.getLocation().getRegionName(),
-                product.getUser().getUsername(),
-                product.getFirstImageUrl()
-        ));
-        return ResponseEntity.ok(dtoPage);
+    public Page<Product> getProducts(@PageableDefault(page = 0, size = 20) Pageable pageable) {
+        return boardRepository.findAll(pageable);
     }
 
     @GetMapping("/products/{id}")

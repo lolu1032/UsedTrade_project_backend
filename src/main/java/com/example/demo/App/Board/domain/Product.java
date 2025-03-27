@@ -33,23 +33,24 @@ public class Product extends BaseEntity {
 
     private String status; // 상품 상태
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "user_id", nullable = false)
     @JsonIgnore
     private Users user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "location_id")
     @JsonIgnore
     private Location location;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "category_id")
     @JsonIgnore
     private Category category;
 
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "product")
+    @BatchSize(size = 4)
     private final List<Image> images = new ArrayList<>();
 
     public String getFirstImageUrl() {
