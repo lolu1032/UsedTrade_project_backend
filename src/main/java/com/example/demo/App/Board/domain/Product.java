@@ -35,17 +35,14 @@ public class Product extends BaseEntity {
 
     @ManyToOne()
     @JoinColumn(name = "user_id", nullable = false)
-    @JsonIgnore
     private Users user;
 
     @ManyToOne()
     @JoinColumn(name = "location_id")
-    @JsonIgnore
     private Location location;
 
     @ManyToOne()
     @JoinColumn(name = "category_id")
-    @JsonIgnore
     private Category category;
 
 

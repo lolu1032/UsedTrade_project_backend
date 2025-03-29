@@ -18,6 +18,5 @@ public class Image {
 
     @ManyToOne()
     @JoinColumn(name = "product_id")
-    @JsonIgnore // Product 직렬화로 인해 결과가 중복해서 나와 사용
     Product product;
 }
