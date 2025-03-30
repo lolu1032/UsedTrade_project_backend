@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -62,15 +63,19 @@ public class BoardService {
         Product product = boardRepository.findById(id)
                 .orElseThrow(BoardErrorCode.BOARD_NOT_FOUND::exception);
 
-        product.update(request.title(), request.description(), request.price());
+        product.update(
+                Optional.ofNullable(request.title()).orElse(product.getTitle()),
+                Optional.ofNullable(request.description()).orElse(product.getDescription()),
+                Optional.ofNullable(request.price()).orElse(product.getPrice())
+        );
 
         boardRepository.save(product);
 
         return UpdateBoardResponse.builder()
                 .id(product.getId())
-                .title(request.title())
-                .description(request.description())
-                .price(request.price())
+                .title(product.getTitle())
+                .description(product.getDescription())
+                .price(product.getPrice())
                 .build();
     }
 

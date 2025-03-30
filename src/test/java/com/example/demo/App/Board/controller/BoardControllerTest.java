@@ -95,10 +95,13 @@ class BoardControllerTest {
         String updateTitle = "New Title";
         String updateDescription = "New Description";
 
-        UpdateBoardRequest request = new UpdateBoardRequest(id,updateTitle, updateDescription, BigDecimal.valueOf(0));
+        UpdateBoardRequest request = new UpdateBoardRequest(id,updateTitle, updateDescription, null);
 
         given(boardService.updateBoard(id, request))
-                .willReturn(new UpdateBoardResponse(id, updateTitle, updateDescription, BigDecimal.valueOf(0)));
+                .willReturn(new UpdateBoardResponse(id,
+                        Optional.ofNullable(request.title()).orElse(updateTitle),
+                        Optional.ofNullable(request.description()).orElse(updateDescription),
+                        Optional.ofNullable(request.price()).orElse(product.getPrice())));
 
         // when
         UpdateBoardResponse response = boardService.updateBoard(id,request);
@@ -106,6 +109,7 @@ class BoardControllerTest {
         // then
         assertThat(response.title()).isEqualTo("New Title");
         assertThat(response.description()).isEqualTo("New Description");
+        assertThat(response.price()).isEqualTo(BigDecimal.valueOf(100000));
 
     }
 
