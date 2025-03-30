@@ -22,7 +22,7 @@ public final class BoardReadDtos {
     }
 
     @Builder
-    public record UpdateBoard(
+    public record UpdateBoardResponse(
             Long id,
             String title,
             String description,
@@ -31,9 +31,29 @@ public final class BoardReadDtos {
     }
 
     @Builder
-    public record CreateBoard(
+    public record UpdateBoardRequest(
             Long id,
+            String title,
+            String description,
+            BigDecimal price
+    ) {
+    }
 
+
+    @Builder
+    public record CreateBoardResponse(
+            Long id,
+            String title,
+            String description,
+            BigDecimal price,
+            Long userId,
+            Long locationId,
+            Long categoryId
+    ) {
+    }
+
+    @Builder
+    public record CreateBoardRequest(
             @NotBlank(message = "제목을 입력해주세요.")
             @Size(min = 2, message = "두 글자 이상 입력하세요.")
             @Size(max = 30, message = "제목은 최대 30글자입니다.")
@@ -49,6 +69,7 @@ public final class BoardReadDtos {
             Long userId,
             Long locationId,
             Long categoryId
+
     ) {
     }
 
@@ -59,6 +80,7 @@ public final class BoardReadDtos {
             boolean status
     ) {
     }
+
     @Builder
     public record LikeResponse(
             boolean status

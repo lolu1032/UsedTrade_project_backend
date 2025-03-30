@@ -25,22 +25,18 @@ public class BoardService {
     private final LocationRepository locationRepository;
     private final CategoryRepository categoryRepository;
 
-    public CreateBoard createBoard(
-            String title, String description,
-            BigDecimal price, Long userId,
-            Long locationId, Long categoryId
-    ) {
-        Users user = userRepository.findById(userId)
+    public CreateBoardResponse createBoard(CreateBoardRequest request) {
+        Users user = userRepository.findById(request.userId())
                 .orElseThrow(BoardErrorCode.USER_NOT_FOUND::exception);
-        Location location = locationRepository.findById(locationId)
+        Location location = locationRepository.findById(request.locationId())
                 .orElseThrow(BoardErrorCode.LOCATION_NOT_FOUND::exception);
-        Category category = categoryRepository.findById(categoryId)
+        Category category = categoryRepository.findById(request.categoryId())
                 .orElseThrow(BoardErrorCode.CATEGORY_NOT_FOUND::exception);
 
         Product product = Product.builder()
-                .title(title)
-                .description(description)
-                .price(price)
+                .title(request.title())
+                .description(request.description())
+                .price(request.price())
                 .views(0)
                 .status("SOLD")
                 .category(category)
@@ -50,39 +46,32 @@ public class BoardService {
 
         boardRepository.save(product);
 
-        return CreateBoard.builder()
+        return CreateBoardResponse.builder()
                 .id(product.getId())
                 .title(product.getTitle())
                 .description(product.getDescription())
                 .price(product.getPrice())
-                .userId(userId)
-                .locationId(locationId)
-                .categoryId(categoryId)
+                .userId(user.getId())
+                .locationId(location.getId())
+                .categoryId(category.getId())
                 .build();
     }
 
 
-    public UpdateBoard updateBoard(Long id, String title, String description, BigDecimal price) {
+    public UpdateBoardResponse updateBoard(Long id,UpdateBoardRequest request) {
         Product product = boardRepository.findById(id)
                 .orElseThrow(BoardErrorCode.BOARD_NOT_FOUND::exception);
 
-        product.update(title, description, price);
+        product.update(request.title(), request.description(), request.price());
 
         boardRepository.save(product);
 
-        return UpdateBoard.builder()
+        return UpdateBoardResponse.builder()
                 .id(product.getId())
-                .title(title)
-                .description(description)
-                .price(price)
+                .title(request.title())
+                .description(request.description())
+                .price(request.price())
                 .build();
-    }
-
-    public void delete(Long id) {
-        Product product = boardRepository.findById(id)
-                .orElseThrow(BoardErrorCode.BOARD_NOT_FOUND::exception);
-
-        boardRepository.deleteById(product.getId());
     }
 
     public Board readOne(long id) {

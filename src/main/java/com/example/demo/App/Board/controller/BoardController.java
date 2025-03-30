@@ -33,22 +33,22 @@ public class BoardController {
     }
 
     @PostMapping
-    public CreateBoard createBoard(@RequestBody @Valid CreateBoard createBoard) {
-        return boardService.createBoard(createBoard.title(),createBoard.description(),createBoard.price(),createBoard.userId(),createBoard.locationId(),createBoard.categoryId());
+    public CreateBoardResponse createBoard(@RequestBody @Valid CreateBoardRequest request) {
+        return boardService.createBoard(request);
     }
 
 
     @PutMapping("{id}")
-    public UpdateBoard updateBoard(
+    public UpdateBoardResponse updateBoard(
             @PathVariable Long id,
-            @RequestBody UpdateBoard updateBoard)
+            @RequestBody UpdateBoardRequest request)
     {
-        return boardService.updateBoard(id, updateBoard.title(),updateBoard.description(),updateBoard.price());
+        return boardService.updateBoard(id, request);
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) {
-        boardService.delete(id);
+        boardRepository.deleteById(id);
         return ResponseEntity.ok("삭제가 완료되었습니다.");
     }
 

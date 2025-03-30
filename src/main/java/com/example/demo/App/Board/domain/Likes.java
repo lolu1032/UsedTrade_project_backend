@@ -25,7 +25,4 @@ public class Likes {
     @JoinColumn(name = "product_id")
     private Product product;
 
-
-    public Likes(boolean b, Users userss, Product products) {
-    }
 }
