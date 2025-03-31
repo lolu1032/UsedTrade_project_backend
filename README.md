@@ -31,6 +31,7 @@ https://documenter.getpostman.com/view/36962815/2sAYdoG7wj
 - PostgreSQL, redis
 - JPA
 - WebSocket
+- docker
 
 ---
 
