@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 
 public final class BoardReadDtos {
     @Builder
-    public record Board(
+    public record BoardResponse (
             Long id,
             String title,
             String description,

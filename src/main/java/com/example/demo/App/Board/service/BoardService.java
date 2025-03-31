@@ -79,7 +79,7 @@ public class BoardService {
                 .build();
     }
 
-    public Board readOne(long id) {
+    public BoardResponse readOne(long id) {
         Product product = boardRepository.findById(id)
                 .orElseThrow(BoardErrorCode.BOARD_NOT_FOUND::exception);
 
@@ -88,7 +88,7 @@ public class BoardService {
         boardRepository.save(product);
 
 
-        return Board.builder()
+        return BoardResponse.builder()
                 .id(product.getId())
                 .title(product.getTitle())
                 .description(product.getDescription())

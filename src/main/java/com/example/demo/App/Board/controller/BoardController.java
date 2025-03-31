@@ -28,7 +28,7 @@ public class BoardController {
     }
 
     @GetMapping("/products/{id}")
-    public Board readOne(@PathVariable long id) {
+    public BoardResponse readOne(@PathVariable long id) {
         return boardService.readOne(id);
     }
 

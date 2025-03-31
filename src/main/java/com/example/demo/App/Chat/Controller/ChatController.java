@@ -38,12 +38,12 @@ public class ChatController {
     @GetMapping("/rooms")
     public List<ChatRoomEntity> getRoomList() {
         log.info("방 목록 조회 요청");
-        return chatService.findAllRooms();
+        return chatRoomRepository.findAll();
     }
 
     // 채팅방 정보 조회
     @GetMapping("/room/{roomId}")
-    public ChatRoom getRoomInfo(@PathVariable String roomId) {
+    public ChatRoomEntity getRoomInfo(@PathVariable String roomId) {
         log.info("방 정보 조회 요청: {}", roomId);
         return chatService.findRoomById(roomId);
     }

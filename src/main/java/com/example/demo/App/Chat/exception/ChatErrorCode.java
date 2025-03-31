@@ -7,7 +7,8 @@ import org.springframework.http.HttpStatus;
 @RequiredArgsConstructor
 public enum ChatErrorCode implements ErrorCode {
     DEFAULT("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR),
-    CREATED_CHAT_ROOM("이미 방이 생성되어있습니다.",HttpStatus.CONFLICT);
+    CREATED_CHAT_ROOM("이미 방이 생성되어있습니다.",HttpStatus.CONFLICT),
+    NOT_FOUND_CHAT_ROOM("방을 찾을 수 없습니다.",HttpStatus.NOT_FOUND);
 
     private final String message;
     private final HttpStatus status;

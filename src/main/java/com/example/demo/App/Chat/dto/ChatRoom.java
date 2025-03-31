@@ -13,7 +13,7 @@ import lombok.Builder;
 public class ChatRoom {
     private String roomId;
     private String name;
-    private String lastMessage; // React 연동 고려 필드
+    private String lastMessage;
     private Long userId;
     private Long productId;
 

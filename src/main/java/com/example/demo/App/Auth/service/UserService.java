@@ -91,11 +91,6 @@ public class UserService {
                 .build();
     }
 
-    @Scheduled(fixedRate = 3600000)
-    public void deleteExpiredTokens() {
-        verificationTokenRepository.deleteByExpiryDateBefore(Instant.now());
-    }
-
     public PasswordResetResponse requestPasswordReset(PasswordResetRequest request) {
         Users user = userRepository.findByEmail(request.email())
                 .orElseThrow(LoginErrorCode.EMAIL_NOT_FOUND::exception);

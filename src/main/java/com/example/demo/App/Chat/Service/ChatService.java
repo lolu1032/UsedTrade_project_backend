@@ -65,14 +65,10 @@ public class ChatService {
 
     }
 
-    // 모든 채팅방 조회
-    public List<ChatRoomEntity> findAllRooms() {
-        return chatRoomRepository.findAll();
-    }
-
     // 특정 채팅방 조회
-    public ChatRoom findRoomById(String roomId) {
-        return chatRooms.get(roomId);
+    public ChatRoomEntity findRoomById(String roomId) {
+        return chatRoomRepository.findById(roomId)
+                .orElseThrow(ChatErrorCode.NOT_FOUND_CHAT_ROOM::exception);
     }
 
 
