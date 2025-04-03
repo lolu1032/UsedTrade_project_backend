@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 
+import java.util.List;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -52,5 +54,9 @@ public class BoardController {
         return ResponseEntity.ok("삭제가 완료되었습니다.");
     }
 
+    @GetMapping("/userPost")
+    public List<Product> readAllUserBoard(@RequestBody readAllUserBoardRequest request) {
+        return boardRepository.findByUserId(request.userId());
+    }
 }
 

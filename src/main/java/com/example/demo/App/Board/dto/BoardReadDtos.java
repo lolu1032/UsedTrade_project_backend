@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 
 public final class BoardReadDtos {
     @Builder
-    public record BoardResponse (
+    public record BoardResponse(
             Long id,
             String title,
             String description,
@@ -84,6 +84,12 @@ public final class BoardReadDtos {
     @Builder
     public record LikeResponse(
             boolean status
+    ) {
+    }
+
+    @Builder
+    public record readAllUserBoardRequest(
+            Long userId
     ) {
     }
 }
