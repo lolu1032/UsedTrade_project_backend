@@ -15,6 +15,6 @@ public final class ChatCommandDtos {
     ){}
 
     @Builder
-    public record ChatRoomResponse(HttpStatus status, String message){}
+    public record ChatRoomResponse(HttpStatus status, String message,String roomId,String name){}
 }
 

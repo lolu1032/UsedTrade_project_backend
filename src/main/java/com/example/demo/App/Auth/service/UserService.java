@@ -40,13 +40,17 @@ public class UserService {
             .orElseThrow(
                     LoginErrorCode.EMAIL_NOT_FOUND::exception
             );
+
         if(user.matchPassword(bCryptPasswordEncoder, loginRequest.password())) {
             throw LoginErrorCode.PASSWORD_NOT_FOUND.exception();
         }
+
         RefreshToken refreshTokenEntity  = refreshTokenRepository.findByUserId(user.fetchUserId())
                 .orElseThrow(LoginErrorCode.TOKEN_NOT_FOUND::exception);
+
         String accessToken = "";
         String refreshToken = refreshTokenEntity.fetchToken();
+
         if (jwtUtil.isValidRefreshToken(refreshToken)) {
             accessToken = jwtUtil.createAccessToken(user);
         } else {
@@ -54,6 +58,7 @@ public class UserService {
             refreshTokenEntity.updateToken(refreshToken);
             refreshTokenRepository.save(refreshTokenEntity);
         }
+
         return AccessTokenResponse.builder()
                 .id(user.getId())
                 .username(user.getUsername())
@@ -78,7 +83,9 @@ public class UserService {
         }
         String accessToken = jwtUtil.createAccessToken(user);
         String refreshToken = jwtUtil.createRefreshToken(user);
+
         userRepository.save(user);
+
         refreshTokenRepository.save(
                 RefreshToken.builder()
                         .user(user)

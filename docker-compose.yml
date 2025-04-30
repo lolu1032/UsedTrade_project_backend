@@ -1,12 +1,12 @@
 services:
   postgres:
-    image: postgres:15  # 최신 버전을 사용하거나 원하는 버전 지정
+    image: postgres:15
     container_name: my_postgres
     restart: always
     environment:
       POSTGRES_DB: project
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: qwer1234
+      POSTGRES_PASSWORD: 1234
     ports:
       - "5432:5432"
     volumes:

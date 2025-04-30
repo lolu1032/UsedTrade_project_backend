@@ -1,7 +1,9 @@
 package com.example.demo.App.Chat.Controller;
 
+import com.example.demo.App.Chat.Repository.ChatMessageRepository;
 import com.example.demo.App.Chat.Repository.ChatRoomRepository;
 import com.example.demo.App.Chat.Service.ChatService;
+import com.example.demo.App.Chat.domain.ChatMessageEntity;
 import com.example.demo.App.Chat.domain.ChatRoomEntity;
 import com.example.demo.App.Chat.dto.ChatCommandDtos.*;
 import com.example.demo.App.Chat.dto.ChatMessage;
@@ -26,6 +28,7 @@ public class ChatController {
     private final SimpMessageSendingOperations messagingTemplate;
     private final ChatService chatService;
     private final ChatRoomRepository chatRoomRepository;
+    private final ChatMessageRepository chatMessageRepository;
 
     // 채팅방 생성
     @PostMapping("/room")
@@ -39,6 +42,10 @@ public class ChatController {
     public List<ChatRoomEntity> getRoomList() {
         log.info("방 목록 조회 요청");
         return chatRoomRepository.findAll();
+    }
+    @GetMapping("/room/{roomId}/messages")
+    public List<ChatMessageEntity> getMessagesByRoom(@PathVariable String roomId) {
+        return chatMessageRepository.findByRoomIdOrderBySentAtAsc(roomId);
     }
 
     // 채팅방 정보 조회

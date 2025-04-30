@@ -10,7 +10,9 @@ public class ChatMessage {
     public enum MessageType {
         ENTER, TALK, EXIT, MATCH, MATCH_REQUEST;
     }
-
+    private Long senderId;
+    private Long productId;
+    private String roomName;
     private MessageType type;
     private String roomId;
     private String sender;

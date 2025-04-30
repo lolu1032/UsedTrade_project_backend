@@ -3,6 +3,7 @@ package com.example.demo.App.Chat.Repository;
 
 import com.example.demo.App.Auth.domain.Users;
 import com.example.demo.App.Board.domain.Product;
+import com.example.demo.App.Chat.domain.ChatMessageEntity;
 import com.example.demo.App.Chat.domain.ChatRoomEntity;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
